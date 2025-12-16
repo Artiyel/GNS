@@ -4,52 +4,52 @@
       "igp": "RIP",
       "routers": {"R1": {
         "interfaces": {
-          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R2"},
-          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R3"}
+          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R2", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R3", "network": {"prefix": "", "subnet": ""}}
       }
       },
       "R2": {
         "interfaces": {
-          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R1"},
-          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R4"},
-          "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R3"}
+          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R1", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R4", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R3", "network": {"prefix": "", "subnet": ""}}
         }
       },
       "R3": {
         "interfaces": {
-          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R1"},
-          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R5"},
-          "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R2"}
+          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R1", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R5", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R2", "network": {"prefix": "", "subnet": ""}}
         }
       },
       "R4": {
         "interfaces": {
-          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R2"},
-          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R6"},
-          "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R5"},
-          "Gigabitethernet3/0": {"ipv6": "", "ngbr" : "R7"}
+          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R2", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R6", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R5", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet3/0": {"ipv6": "", "ngbr" : "R7", "network": {"prefix": "", "subnet": ""}}
         }
       },
       "R5": {
         "interfaces": {
-          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R3"},
-          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R7"},
-          "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R6"},
-          "Gigabitethernet3/0": {"ipv6": "", "ngbr" : "R4"}
+          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R3", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R7", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R6", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet3/0": {"ipv6": "", "ngbr" : "R4", "network": {"prefix": "", "subnet": ""}}
         }
       },
       "R6": {
         "interfaces": {
-          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R4"},
-          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R8"},
-          "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R5"}
+          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R4", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R8", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R5", "network": {"prefix": "", "subnet": ""}}
         }
       },
       "R7": {
         "interfaces": {
-          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R5"},
-          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R9"},
-          "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R4"}
+          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R5", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R9", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R4", "network": {"prefix": "", "subnet": ""}}
         }
       }
     }
@@ -60,53 +60,53 @@
       "routers": 
       {"R8" : {
         "interfaces": {
-          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R6"},
-          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R10"},
-          "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R11"}
+          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R6", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R10", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R11", "network": {"prefix": "", "subnet": ""}}
         }
       },
       "R9" : {
         "interfaces": {
-          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R7"},
-          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R11"},
-          "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R10"}
+          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R7", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R11", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R10", "network": {"prefix": "", "subnet": ""}}
         }
       },
       "R10" : {
         "interfaces": {
-          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R8"},
-          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R12"},
-          "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R11"},
-            "Gigabitethernet3/0": {"ipv6": "", "ngbr" : "R9"}
+          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R8", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R12", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R11", "network": {"prefix": "", "subnet": ""}},
+            "Gigabitethernet3/0": {"ipv6": "", "ngbr" : "R9", "network": {"prefix": "", "subnet": ""}}
         }
       },
       "R11" : {
         "interfaces": {
-          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R9"},
-          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R13"},
-          "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R10"},
-          "Gigabitethernet3/0": {"ipv6": "", "ngbr" : "R8"}
+          "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R9", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R13", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R10", "network": {"prefix": "", "subnet": ""}},
+          "Gigabitethernet3/0": {"ipv6": "", "ngbr" : "R8", "network": {"prefix": "", "subnet": ""}}
         }
       },
         "R12" : {
             "interfaces": {
-            "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R10"},
-            "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R14"},
-            "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R13"}
+            "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R10", "network": {"prefix": "", "subnet": ""}},
+            "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R14", "network": {"prefix": "", "subnet": ""}},
+            "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R13", "network": {"prefix": "", "subnet": ""}}
             }
       }
         ,
             "R13" : {
                 "interfaces": {
-                "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R11"},
-                "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R14"},
-                "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R12"}
+                "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R11", "network": {"prefix": "", "subnet": ""}},
+                "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R14", "network": {"prefix": "", "subnet": ""}},
+                "Gigabitethernet2/0": {"ipv6": "", "ngbr" : "R12", "network": {"prefix": "", "subnet": ""}}
                 }
         },
             "R14" : {
                 "interfaces": {
-                "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R12"},
-                "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R13"}
+                "Gigabitethernet0/0": {"ipv6": "", "ngbr" : "R12", "network": {"prefix": "", "subnet": ""}},
+                "Gigabitethernet1/0": {"ipv6": "", "ngbr" : "R13", "network": {"prefix": "", "subnet": ""}}
                 }
         }
     }
