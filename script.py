@@ -1,5 +1,5 @@
 import json
-import re
+
 
 def load_intent(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -41,6 +41,8 @@ def set_address(data):
 
     dump_intent('test.json', data)
 
+def create_config_files(data):
+    pass
 
 set_prefix(data)
 set_address(data)
