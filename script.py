@@ -42,7 +42,12 @@ def set_address(data):
     dump_intent('test.json', data)
 
 def create_config_files(data):
-    pass
+    autonomous_systems = data.get('AS')
+    for autonomous_system, as_data in autonomous_systems.items():
+        for router, router_data in as_data.get('routers', {}).items():
+            open(f"config/{router}_configs_i{router[1:]}_private-config.cfg", "w").close()
+            open(f"config/{router}_configs_i{router[1:]}_startup-config.cfg", "w").close()
 
 set_prefix(data)
 set_address(data)
+create_config_files(data)
