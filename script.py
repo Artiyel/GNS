@@ -24,13 +24,23 @@ def set_prefix(data):
 
 def set_address(data):
     autonomous_systems = data.get('AS')
-    a = 1
+    
     for autonomous_system, as_data in autonomous_systems.items():
         for router, router_data in as_data.get('routers', {}).items():
-            router_data['address'] = f"{as_data['network']['prefix']}{a}"
-        a += 1
+            for interface, interface_data in router_data.get('interfaces', {}).items():
+                neighbor = interface_data.get('ngbr')
+                if interface_data.get('ipv6') == '':
+                    interface_data['ipv6'] = f"{as_data['network']['prefix']}{router[1:]}{neighbor[1:]}"
+
+                    
+                    for ngbr_interface, ngbr_interface_data in as_data['routers'].get(neighbor, {}).items():
+                        if ngbr_interface_data.get('ngbr') == router:
+                            ngbr_interface_data['ipv6'] = f"{as_data['network']['prefix']}:{router}{neighbor[1:]}"
+
+
 
     dump_intent('test.json', data)
 
 
 set_prefix(data)
+set_address(data)
