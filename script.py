@@ -45,14 +45,14 @@ def create_config_files(data):
     autonomous_systems = data.get('AS')
     for autonomous_system, as_data in autonomous_systems.items():
         for router, router_data in as_data.get('routers', {}).items():
-            open(f"config/{router}_configs_i{router[1:]}_private-config.cfg", "w").close()
-            open(f"config/{router}_configs_i{router[1:]}_startup-config.cfg", "w").close()
+            open(f"config/{router}_i{router[1:]}_private-config.cfg", "w").close()
+            open(f"config/{router}_i{router[1:]}_startup-config.cfg", "w").close()
 
 def config_interfaces(data):
     autonomous_systems = data.get('AS')
     for autonomous_system, as_data in autonomous_systems.items():
         for router, router_data in as_data.get('routers', {}).items():
-            with open(f"config/{router}_configs_i{router[1:]}_startup-config.cfg", "a", encoding='utf-8') as file:
+            with open(f"config/{router}_i{router[1:]}_startup-config.cfg", "a", encoding='utf-8') as file:
                 for interface, interface_data in router_data.get('interfaces', {}).items():
                     file.write(f"interface {interface}\n")
                     file.write(" no ip address\n")
@@ -64,3 +64,4 @@ def config_interfaces(data):
 set_prefix(data)
 set_address(data)
 create_config_files(data)
+config_interfaces(data)
