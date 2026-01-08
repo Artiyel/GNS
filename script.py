@@ -39,7 +39,7 @@ def set_address(data):
 
 
 
-    dump_intent('test.json', data)
+    dump_intent('intent.json', data)
 
 def create_config_files(data):
     autonomous_systems = data.get('AS')
@@ -59,7 +59,8 @@ def config_interfaces(data):
                     file.write(" ipv6 enable\n")
                     file.write(f" ipv6 address {interface_data['ipv6']}{as_data['network']['subnet']}\n")
                     file.write(" no shutdown\n")
-                    
+                    file.write("!\n")
+                file.write("!\n")
 
 set_prefix(data)
 set_address(data)
