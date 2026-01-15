@@ -87,10 +87,25 @@ def config_interfaces(data):
 
                     file.write(f"interface {interface}\n")
                     file.write(" no ip address\n")
+                    if interface == "Gigabitethernet0/0":
+                        file.write(" media-type gbic\n")
+                        file.write(" speed 1000\n")
+                        file.write(" duplex full\n")
+                    file.write(" negotiation auto\n")
                     file.write(" ipv6 enable\n")
                     file.write(f" ipv6 address {interface_data['ipv6']}{as_data['network']['subnet']}\n")
                     file.write(" no shutdown\n")
                     file.write("!\n")
+                file.write("!\n")
+
+                file.write("ip forward-protocol nd\n")
+                file.write("!\n")                
+
+                file.write("no ip http server\n")
+                file.write("no ip http secure-server\n")
+                file.write("!\n")
+
+                file.write("control-plane\n")
                 file.write("!\n")
 
                 file.write("control-plane\n")
