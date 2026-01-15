@@ -54,7 +54,46 @@ def config_interfaces(data):
     for autonomous_system, as_data in autonomous_systems.items():
         for router, router_data in as_data.get('routers', {}).items():
             with open(f"config/{router}_i{router[1:]}_startup-config.cfg", "a", encoding='utf-8') as file:
-                for interface, interface_data in router_data.get('interfaces', {}).items():
+                file.write("!\n")
+                file.write(f"hostname R{router[1:]}\n")
+                file.write("!\n")
+
+                file.write("boot-start-marker\n")
+                file.write("boot-end-marker\n")
+                file.write("!\n")
+                
+                file.write("no aaa new-model\n")
+                file.write("no ip icmp rate-limit unreachable\n")
+                file.write("ip cef\n")
+                file.write("!\n")
+
+                file.write("no ip domain lookup\n")
+                file.write("ipv6 unicast-routing\n")
+                file.write("ipv6 cef\n")
+                file.write("!\n")
+
+                file.write("multilink bundle-name authenticated\n")
+                file.write("!\n")
+
+                file.write("ip tcp synwait-time 5\n")
+                file.write("!\n")
+
+                file.write("interface Loopback0\n")
+                file.write(" no ip address\n")
+                file.write(f" ipv6 address 2001:DB8:{router[1:]}::1/128\n")
+                if as_data['igp'] == 'RIP':
+                    file.write(f" ipv6 rip p{router[1:]} enable\n")
+                else:
+                    file.write(f" ipv6 ospf {router[1:]} area 0\n")
+                file.write("!\n")
+
+                file.write("interface Ethernet0/0\n")
+                file.write(" no ip address\n")
+                file.write(" shutdown\n")
+                file.write(" duplex auto\n")
+                file.write("!\n")
+                for interface, interface_data in router_data.get('interfaces', {}).items():                   
+
                     file.write(f"interface {interface}\n")
                     file.write(" no ip address\n")
                     file.write(" ipv6 enable\n")
