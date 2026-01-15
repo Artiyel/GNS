@@ -1,0 +1,38 @@
+Jan 15 10:50:38.395 HYPERVISOR: Release 0.2.17-x86/Windows (tag 2017072410)
+Jan 15 10:50:38.396 HYPERVISOR: Started on IP = localhost, TCP port = 57465.
+Jan 15 10:50:38.858 HYPERVISOR: exec_cmd: hypervisor version 
+Jan 15 10:50:38.861 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\marti\GNS3\projects\jeremieee\project-files\dynamips 
+Jan 15 10:50:38.862 GENERAL: working_dir=C:\Users\marti\GNS3\projects\jeremieee\project-files\dynamips
+Jan 15 10:50:38.863 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\marti\GNS3\projects\jeremieee\project-files\dynamips\602fca00-c81a-4797-abd3-abc5d2497493 
+Jan 15 10:50:38.868 GENERAL: working_dir=C:\Users\marti\GNS3\projects\jeremieee\project-files\dynamips\602fca00-c81a-4797-abd3-abc5d2497493
+Jan 15 10:50:38.869 HYPERVISOR: exec_cmd: vm create R9 9 c7200 
+Jan 15 10:50:38.877 VM: VM R9 created.
+Jan 15 10:50:38.880 HYPERVISOR: exec_cmd: vm set_con_tcp_port R9 5014 
+Jan 15 10:50:38.881 HYPERVISOR: exec_cmd: c7200 get_mac_addr R9 
+Jan 15 10:50:38.882 HYPERVISOR: exec_cmd: vm get_status R9 
+Jan 15 10:50:38.882 HYPERVISOR: exec_cmd: vm slot_add_binding R9 0 0 C7200-IO-FE 
+Jan 15 10:50:38.886 HYPERVISOR: exec_cmd: vm set_ios R9 C:/Users/marti/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Jan 15 10:50:38.890 HYPERVISOR: exec_cmd: vm set_exec_area R9 64 
+Jan 15 10:50:38.892 HYPERVISOR: exec_cmd: vm set_ram R9 512 
+Jan 15 10:50:38.895 HYPERVISOR: exec_cmd: vm set_nvram R9 512 
+Jan 15 10:50:38.897 HYPERVISOR: exec_cmd: vm set_disk0 R9 0 
+Jan 15 10:50:38.901 HYPERVISOR: exec_cmd: vm get_status R9 
+Jan 15 10:50:38.902 HYPERVISOR: exec_cmd: vm slot_remove_binding R9 0 0 
+Jan 15 10:50:38.904 HYPERVISOR: exec_cmd: vm get_status R9 
+Jan 15 10:50:38.905 HYPERVISOR: exec_cmd: vm slot_add_binding R9 0 0 C7200-IO-GE-E 
+Jan 15 10:50:38.909 HYPERVISOR: exec_cmd: vm get_status R9 
+Jan 15 10:50:38.910 HYPERVISOR: exec_cmd: vm slot_add_binding R9 1 0 PA-GE 
+Jan 15 10:50:38.912 HYPERVISOR: exec_cmd: vm get_status R9 
+Jan 15 10:50:38.913 HYPERVISOR: exec_cmd: vm slot_add_binding R9 2 0 PA-GE 
+Jan 15 10:50:38.917 HYPERVISOR: exec_cmd: vm get_status R9 
+Jan 15 10:50:38.917 HYPERVISOR: exec_cmd: vm slot_add_binding R9 3 0 PA-GE 
+Jan 15 10:50:39.072 HYPERVISOR: exec_cmd: vm set_ios R9 C:/Users/marti/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Jan 15 10:54:38.461 HYPERVISOR: exec_cmd: nio create_udp udp-e4218ae1-331e-4c1a-9d30-729793b81c7a 10124 127.0.0.1 10125 
+Jan 15 10:54:39.339 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R9 1 0 udp-e4218ae1-331e-4c1a-9d30-729793b81c7a 
+Jan 15 10:54:39.343 HYPERVISOR: exec_cmd: vm get_status R9 
+Jan 15 10:54:51.376 HYPERVISOR: exec_cmd: nio create_udp udp-f2ab3f86-cbe1-450b-9ec9-7a57fc47ce4a 10128 127.0.0.1 10129 
+Jan 15 10:54:51.384 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R9 0 0 udp-f2ab3f86-cbe1-450b-9ec9-7a57fc47ce4a 
+Jan 15 10:54:51.385 HYPERVISOR: exec_cmd: vm get_status R9 
+Jan 15 10:56:36.086 HYPERVISOR: exec_cmd: nio create_udp udp-96665eab-8310-48f7-963c-76719425f522 10172 127.0.0.1 10173 
+Jan 15 10:56:36.095 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R9 2 0 udp-96665eab-8310-48f7-963c-76719425f522 
+Jan 15 10:56:36.097 HYPERVISOR: exec_cmd: vm get_status R9 

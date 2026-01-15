@@ -1,0 +1,30 @@
+Jan 15 10:57:26.723 HYPERVISOR: Release 0.2.17-x86/Windows (tag 2017072410)
+Jan 15 10:57:26.724 HYPERVISOR: Started on IP = localhost, TCP port = 53920.
+Jan 15 10:57:27.118 HYPERVISOR: exec_cmd: hypervisor version 
+Jan 15 10:57:27.121 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\marti\Documents\INSA\TC\GNS\GNS3\Jeremieeeeee\project-files\dynamips 
+Jan 15 10:57:27.123 GENERAL: working_dir=C:\Users\marti\Documents\INSA\TC\GNS\GNS3\Jeremieeeeee\project-files\dynamips
+Jan 15 10:57:27.124 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\marti\Documents\INSA\TC\GNS\GNS3\Jeremieeeeee\project-files\dynamips\c4b3cd70-a9ce-4681-a185-8ccd4ada64d2 
+Jan 15 10:57:27.128 GENERAL: working_dir=C:\Users\marti\Documents\INSA\TC\GNS\GNS3\Jeremieeeeee\project-files\dynamips\c4b3cd70-a9ce-4681-a185-8ccd4ada64d2
+Jan 15 10:57:27.128 HYPERVISOR: exec_cmd: vm create R9 9 c7200 
+Jan 15 10:57:27.129 VM: VM R9 created.
+Jan 15 10:57:27.130 HYPERVISOR: exec_cmd: vm set_con_tcp_port R9 5028 
+Jan 15 10:57:27.131 HYPERVISOR: exec_cmd: c7200 get_mac_addr R9 
+Jan 15 10:57:27.132 HYPERVISOR: exec_cmd: vm get_status R9 
+Jan 15 10:57:27.133 HYPERVISOR: exec_cmd: vm slot_add_binding R9 0 0 C7200-IO-FE 
+Jan 15 10:57:27.137 HYPERVISOR: exec_cmd: vm set_disk0 R9 0 
+Jan 15 10:57:27.139 HYPERVISOR: exec_cmd: vm set_exec_area R9 64 
+Jan 15 10:57:27.143 HYPERVISOR: exec_cmd: vm set_ios R9 C:/Users/marti/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Jan 15 10:57:27.146 HYPERVISOR: exec_cmd: c7200 set_mac_addr R9 ca09.085c.0000 
+Jan 15 10:57:27.147 HYPERVISOR: exec_cmd: vm set_nvram R9 512 
+Jan 15 10:57:27.149 HYPERVISOR: exec_cmd: vm set_ram R9 512 
+Jan 15 10:57:27.150 HYPERVISOR: exec_cmd: vm get_status R9 
+Jan 15 10:57:27.150 HYPERVISOR: exec_cmd: vm slot_remove_binding R9 0 0 
+Jan 15 10:57:27.152 HYPERVISOR: exec_cmd: vm get_status R9 
+Jan 15 10:57:27.152 HYPERVISOR: exec_cmd: vm slot_add_binding R9 0 0 C7200-IO-GE-E 
+Jan 15 10:57:27.153 HYPERVISOR: exec_cmd: vm get_status R9 
+Jan 15 10:57:27.153 HYPERVISOR: exec_cmd: vm slot_add_binding R9 1 0 PA-GE 
+Jan 15 10:57:27.154 HYPERVISOR: exec_cmd: vm get_status R9 
+Jan 15 10:57:27.154 HYPERVISOR: exec_cmd: vm slot_add_binding R9 2 0 PA-GE 
+Jan 15 10:57:27.155 HYPERVISOR: exec_cmd: vm get_status R9 
+Jan 15 10:57:27.156 HYPERVISOR: exec_cmd: vm slot_add_binding R9 3 0 PA-GE 
+Jan 15 10:57:27.163 HYPERVISOR: exec_cmd: vm set_con_tcp_port R9 5014 

@@ -1,3 +1,4 @@
 #on ignore les fichiers de configs
 *.cfg
 *.vpc
+*.txt

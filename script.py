@@ -78,15 +78,6 @@ def config_interfaces(data):
                 file.write("ip tcp synwait-time 5\n")
                 file.write("!\n")
 
-                file.write("interface Loopback0\n")
-                file.write(" no ip address\n")
-                file.write(f" ipv6 address 2001:DB8:{router[1:]}::1/128\n")
-                if as_data['igp'] == 'RIP':
-                    file.write(f" ipv6 rip p{router[1:]} enable\n")
-                else:
-                    file.write(f" ipv6 ospf {router[1:]} area 0\n")
-                file.write("!\n")
-
                 file.write("interface Ethernet0/0\n")
                 file.write(" no ip address\n")
                 file.write(" shutdown\n")
@@ -96,11 +87,46 @@ def config_interfaces(data):
 
                     file.write(f"interface {interface}\n")
                     file.write(" no ip address\n")
+                    if interface == "Gigabitethernet0/0":
+                        file.write(" media-type gbic\n")
+                        file.write(" speed 1000\n")
+                        file.write(" duplex full\n")
+                    file.write(" negotiation auto\n")
                     file.write(" ipv6 enable\n")
                     file.write(f" ipv6 address {interface_data['ipv6']}{as_data['network']['subnet']}\n")
                     file.write(" no shutdown\n")
                     file.write("!\n")
                 file.write("!\n")
+
+                file.write("ip forward-protocol nd\n")
+                file.write("!\n")                
+
+                file.write("no ip http server\n")
+                file.write("no ip http secure-server\n")
+                file.write("!\n")
+
+                file.write("control-plane\n")
+                file.write("!\n")
+
+                file.write("control-plane\n")
+                file.write("!\n")
+
+                file.write("line con 0\n")
+                file.write(" exec-timeout 0 0\n")
+                file.write(" privilege level 15\n")
+                file.write(" logging synchronous\n")
+                file.write(" stopbits 1\n")
+                file.write("line aux 0\n")
+                file.write(" exec-timeout 0 0\n")
+                file.write(" privilege level 15\n")
+                file.write(" logging synchronous\n")
+                file.write(" stopbits 1\n")
+                file.write("line vty 0 4\n")
+                file.write(" login\n")
+                file.write("!\n")
+                file.write("!\n")
+                
+                file.write("end\n")
 
 set_prefix(data)
 set_address(data)
