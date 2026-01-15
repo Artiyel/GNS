@@ -1,6 +1,7 @@
 import json
 
 
+
 def load_intent(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
         data = json.load(file)
@@ -16,7 +17,7 @@ data = load_intent('test.json')
 def set_prefix(data):
     autonomous_systems = data.get('AS', {})
     for autonomous_system, as_data in autonomous_systems.items():
-        as_data['network']['prefix'] = f"2001:{autonomous_system}::"
+        as_data['network']['prefix'] = f"2001:{autonomous_system}:"
         as_data['network']['subnet'] = '/64'
     
     dump_intent('test.json', data)
@@ -30,12 +31,12 @@ def set_address(data):
             for interface, interface_data in router_data.get('interfaces', {}).items():
                 neighbor = interface_data.get('ngbr')
                 if interface_data.get('ipv6') == '':
-                    interface_data['ipv6'] = f"{as_data['network']['prefix']}{router[1:]}{neighbor[1:]}"
+                    interface_data['ipv6'] = f"{as_data['network']['prefix']}{router[1:]}{neighbor[1:]}::{router[1:]}"
 
                     
                     for ngbr_interface, ngbr_interface_data in as_data['routers'].get(neighbor, {}).items():
                         if ngbr_interface_data.get('ngbr') == router:
-                            ngbr_interface_data['ipv6'] = f"{as_data['network']['prefix']}:{router}{neighbor[1:]}"
+                            ngbr_interface_data['ipv6'] = f"{as_data['network']['prefix']}:{router}{neighbor[1:]}::{router[1:]}"
 
 
 
