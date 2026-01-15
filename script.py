@@ -39,7 +39,7 @@ def set_address(data):
 
 
 
-    dump_intent('intent.json', data)
+    dump_intent('test.json', data)
 
 def create_config_files(data):
     autonomous_systems = data.get('AS')
