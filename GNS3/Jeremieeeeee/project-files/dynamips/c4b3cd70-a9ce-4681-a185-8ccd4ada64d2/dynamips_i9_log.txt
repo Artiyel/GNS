@@ -1,0 +1,26 @@
+Jan 15 10:49:24.567 HYPERVISOR: Release 0.2.17-x86/Windows (tag 2017072410)
+Jan 15 10:49:24.567 HYPERVISOR: Started on IP = localhost, TCP port = 61756.
+Jan 15 10:49:24.785 HYPERVISOR: exec_cmd: hypervisor version 
+Jan 15 10:49:24.790 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\marti\GNS3\projects\jeremieee\project-files\dynamips 
+Jan 15 10:49:24.791 GENERAL: working_dir=C:\Users\marti\GNS3\projects\jeremieee\project-files\dynamips
+Jan 15 10:49:24.793 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\marti\GNS3\projects\jeremieee\project-files\dynamips\dde04779-ed47-4036-8c72-682a7890ac89 
+Jan 15 10:49:24.795 GENERAL: working_dir=C:\Users\marti\GNS3\projects\jeremieee\project-files\dynamips\dde04779-ed47-4036-8c72-682a7890ac89
+Jan 15 10:49:24.797 HYPERVISOR: exec_cmd: vm create R1 1 c7200 
+Jan 15 10:49:24.807 VM: VM R1 created.
+Jan 15 10:49:24.811 HYPERVISOR: exec_cmd: vm set_con_tcp_port R1 5000 
+Jan 15 10:49:24.811 HYPERVISOR: exec_cmd: c7200 get_mac_addr R1 
+Jan 15 10:49:24.812 HYPERVISOR: exec_cmd: vm get_status R1 
+Jan 15 10:49:24.813 HYPERVISOR: exec_cmd: vm slot_add_binding R1 0 0 C7200-IO-FE 
+Jan 15 10:49:24.820 HYPERVISOR: exec_cmd: vm set_ios R1 C:/Users/marti/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Jan 15 10:49:24.823 HYPERVISOR: exec_cmd: vm set_exec_area R1 64 
+Jan 15 10:49:24.825 HYPERVISOR: exec_cmd: vm set_ram R1 512 
+Jan 15 10:49:24.827 HYPERVISOR: exec_cmd: vm set_nvram R1 512 
+Jan 15 10:49:24.830 HYPERVISOR: exec_cmd: vm set_disk0 R1 0 
+Jan 15 10:49:24.911 HYPERVISOR: exec_cmd: vm set_ios R1 C:/Users/marti/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Jan 15 10:49:45.204 HYPERVISOR: exec_cmd: vm get_status R1 
+Jan 15 10:49:45.205 HYPERVISOR: exec_cmd: vm extract_config R1 
+Jan 15 10:49:45.206 HYPERVISOR: exec_cmd: vm delete R1 
+Jan 15 10:49:45.206 VM: VM R1 destroyed.
+Jan 15 10:49:45.208 HYPERVISOR: exec_cmd: hypervisor stop 
+Jan 15 10:49:45.681 HYPERVISOR: Stopped.
+Jan 15 10:49:45.681 GENERAL: reset done.
