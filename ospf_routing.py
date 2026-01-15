@@ -8,44 +8,68 @@ import configparser
 
 
 def Ospf_Routing(AS_number, routing_data=routing_data):
+    '''
+    :param AS_number:
+    :param routing_data: les informations contenues dans le fichier json
+    '''
     if routing_data["AS"][AS_number]["igp"] == "OSPF":
         for router in routing_data["AS"][AS_number]["routers"]:
             Write_Ospf(router,AS_number)
 
 
 def Write_Ospf(router,AS_number):
+        '''
+        :param router: Le routeur avec ses informations (dans le fichier intent.json)
+        :param AS_number:
+        '''
         process_id = router[1:]
         area_id = AS_number[1:]
+
+        path = "config/R"+process_id+"_i"+process_id+"_startup-config.cfg"
+        line = " ipv6 ospf " + process_id + " area " + area_id +"\n"
+
+        waitinglist = ["Loopback0"]
         for interface in routing_data["AS"][AS_number]["routers"][router]["interfaces"]:
-
-            path = "config/R"+process_id+"_i"+process_id+"_startup-config.cfg"
-            line = " ipv6 ospf " + process_id + " area " + area_id +"\n"
-
-            with open(path, "r") as f:
+            waitinglist.append(interface)
+            
+        
+        with open(path, "r") as f:
                 config = f.readlines()
 
-            newconfig = []
-            i=0
-            while i < len(config):
-                #on détecte l'interface qui nous intéresse
-                if config[i] == "interface " + interface + "\n":
-                    while config[i]!="!\n":
-                        newconfig.append(config[i])
-                        i+=1
-                        print(newconfig)
-                    #on ajoute la ligne de configuration
-                    newconfig.append(line)
-                    if not config[i+1].startswith("interface"):
-                        newconfig.append("!\n")
-                        newconfig.append("router ospf "+process_id+"\n")
-                        i+=1
-                else : 
+        newconfig = []
+        i=0 #numero de la ligne
+        n=0 #numero du routeur
+        verif = 0 #on vérifie si on a bien tout écrit
+        while i < len(config):
+            #on détecte l'interface qui nous intéresse
+            if config[i] == "interface " + waitinglist[n] + "\n":
+                while config[i]!="!\n":
                     newconfig.append(config[i])
                     i+=1
+                #on ajoute la ligne de configuration
+                newconfig.append(line)
+                n+=1
+                verif+=1
+                if not config[i+1].startswith("interface"):
+                    newconfig.append("!\n")
+                    newconfig.append("router ospf "+process_id+"\n")
+                    i+=1
+                    n=0
+            else : 
+                newconfig.append(config[i])
+                i+=1
 
+            # Si on a été bloqué par l'absence d'une interface, on recommence sans
+            if i == len(config)-1 and verif != len(waitinglist):
+                print(f"Warning, interface {waitinglist[verif]} is missing for router R{process_id} !")
+                i=0
+                waitinglist.pop(verif)
+                newconfig=[]
 
-            with open(path,"w") as f:
-                for line in newconfig:
-                    f.write(line)
+        #on ecrit la nouvelle config
+        with open(path,"w") as f:
+            for line in newconfig:
+                f.write(line)
+
 
 Ospf_Routing("102")
