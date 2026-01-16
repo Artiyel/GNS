@@ -53,6 +53,10 @@ def Write_Ospf(router,AS_number):
                 if not config[i+1].startswith("interface"):
                     newconfig.append("!\n")
                     newconfig.append("router ospf "+process_id+"\n")
+                    newconfig.append("!\n")
+                    newconfig.append("ipv6 router ospf "+process_id+"\n")
+                    newconfig.append(f" router-id {process_id}.{process_id}.{process_id}.{process_id}\n")
+                    newconfig.append("redistribute bgp "+area_id+"\n")
                     i+=1
                     n=0
             else : 
