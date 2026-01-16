@@ -2,7 +2,7 @@ from pathlib import Path
 import shutil
 
 def copy_file(src: Path, dst: Path):
-    shutil.copy2(src, dst) 
+    shutil.copy(src, dst) 
     print(f"Copied {src} to {dst}")
 
 
