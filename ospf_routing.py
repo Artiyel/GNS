@@ -28,7 +28,7 @@ def Write_Ospf(router,AS_number):
         path = "config/R"+process_id+"_i"+process_id+"_startup-config.cfg"
         line = " ipv6 ospf " + process_id + " area " + area_id +"\n"
 
-        waitinglist = ["Loopback0"]
+        waitinglist = []
         for interface in routing_data["AS"][AS_number]["routers"][router]["interfaces"]:
             waitinglist.append(interface)
             
