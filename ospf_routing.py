@@ -1,6 +1,6 @@
 # à dégager dès que l'on pourra appeler la fonction depuis le main
 import json
-with open('intent.json', 'r') as file:
+with open('intent2.json', 'r') as file:
     routing_data = json.load(file)
 
 import configparser
@@ -42,7 +42,7 @@ def Write_Ospf(router,AS_number):
         verif = 0 #on vérifie si on a bien tout écrit
         while i < len(config):
             #on détecte l'interface qui nous intéresse
-            if config[i] == "interface " + waitinglist[n] + "\n":
+            if n<len(waitinglist) and config[i] == "interface " + waitinglist[n] + "\n":
                 while config[i]!="!\n":
                     newconfig.append(config[i])
                     i+=1

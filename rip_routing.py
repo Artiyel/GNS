@@ -1,5 +1,5 @@
 import json
-with open('intent.json', 'r') as file:
+with open('intent2.json', 'r') as file:
     routing_data = json.load(file)
 
 def rip_routing(AS_number, routing_data=routing_data):
@@ -13,7 +13,7 @@ def write_rip(router, AS_number):
     process_id = router[1:]
     area_id = AS_number[1:]
     path = "config/R"+process_id+"_i"+process_id+"_startup-config.cfg"
-    line = f"ipv6 rip p{area_id} enable\n"
+    line = f" ipv6 rip p{area_id} enable\n"
    
     with open(path, "r") as f:
         config = f.readlines()
@@ -25,32 +25,29 @@ def write_rip(router, AS_number):
         newconfig = []
         i=0 #numero de la ligne
         n=0 #numero du routeur
-        verif = 0 #on vérifie si on a bien tout écrit
         while i < len(config):
             #on détecte l'interface qui nous intéresse
-            if config[i] == "interface " + waitinglist[n] + "\n":
+            if n<len(waitinglist) and config[i] == "interface " + waitinglist[n] + "\n":
                 while config[i]!="!\n":
                     newconfig.append(config[i])
                     i+=1
                 #on ajoute la ligne de configuration
                 newconfig.append(line)
                 n+=1
-                verif+=1
                 if not config[i+1].startswith("interface"):
-                    newconfig.append("!\n")
-                    newconfig.append("ipv6 router rip p"+area_id+"\n")
-                    newconfig.append(" redistribute connected\n")
-                    i+=1
-                    n=0
+                        newconfig.append("!\n")
+                        newconfig.append("ipv6 router rip p"+area_id+"\n")
+                        newconfig.append(" redistribute connected\n")
+                        i+=1
             else : 
                 newconfig.append(config[i])
                 i+=1
 
             # Si on a été bloqué par l'absence d'une interface, on recommence sans
-            if i == len(config)-1 and verif != len(waitinglist):
-                print(f"Warning, interface {waitinglist[verif]} is missing for router R{process_id} !")
+            if i == len(config)-1 and n != len(waitinglist):
+                print(f"Warning, interface {waitinglist[n]} is missing for router R{process_id} !")
                 i=0
-                waitinglist.pop(verif)
+                waitinglist.pop(n)
                 newconfig=[]
 
         #on ecrit la nouvelle config
