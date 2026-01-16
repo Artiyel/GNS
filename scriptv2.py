@@ -77,7 +77,7 @@ def config_interfaces(data):
                     file.write("!\n")
 
                 # Footer Standard
-                file.write("control-plane\n!\nline con 0\n exec-timeout 0 0\n privilege level 15\n logging synchronous\nline vty 0 4\n login\n!\nend\n")
+                file.write("!\nip forward-protocol nd\n!\nno ip http server\nno ip http secure-server\n!\ncontrol-plane\n!\ncontrol-plane\n!\nline con 0\n exec-timeout 0 0\n privilege level 15\n logging synchronous\nline vty 0 4\n login\n!\nend\n")
 
 # Exécution
 data = load_intent('intent2.json')
