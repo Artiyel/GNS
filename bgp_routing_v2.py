@@ -1,6 +1,6 @@
 import json
 
-with open('test.json', 'r') as file:
+with open('intent2.json', 'r') as file:
     routing_data = json.load(file)
 
 def writeBGPconfig(data):
@@ -41,15 +41,17 @@ def writeBGPconfig(data):
                     " bgp log-neighbor-changes\n",
                     " no bgp default ipv4-unicast\n"
                 ])
-
+                
                 # ---- iBGP (loopbacks)
                 for other_r in data["AS"][as_id]["routers"]:
                     if other_r != r_name:
                         # On accède directement au routeur dans le bon AS
                         remote_router = data["AS"][as_id]["routers"][other_r]
-        
+                        
+    # BIZARRE ON RENTRE PAS DANS LA BOUCLE ????
                         # On vérifie si l'interface Loopback0 existe pour ce routeur
                         if "Loopback0" in remote_router["interfaces"]:
+                            
                             loop_ip = remote_router["interfaces"]["Loopback0"]["ipv6"].split("/")[0]
                             config_lines.append(
                                 f" neighbor {loop_ip} remote-as {as_id}\n"
@@ -60,10 +62,11 @@ def writeBGPconfig(data):
                 for int_info in r_info["interfaces"].values():
                     neighbor = int_info.get("ngbr")
                     neighbor_as = router_to_as.get(neighbor)
+                    
 
                     if not neighbor_as or neighbor_as == as_id:
                         continue
-
+            
                     remote_ip = None
                     for n_int in data["AS"][neighbor_as]["routers"][neighbor]["interfaces"].values():
                         if n_int.get("ngbr") == r_name:
@@ -76,8 +79,8 @@ def writeBGPconfig(data):
                         neighbors.add(remote_ip)
 
                 # ---- address-family ipv6
-                config_lines.extend([
-                    " address-family ipv6\n",
+                config_lines.extend(["!\n",
+                    "address-family ipv6\n",
                     "  redistribute connected\n"
                 ])
 
