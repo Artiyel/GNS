@@ -43,13 +43,18 @@ def writeBGPconfig(data):
                 ])
 
                 # ---- iBGP (loopbacks)
-                for other_r, other_as in router_to_as.items():
-                    if other_as == as_id and other_r != r_name:
-                        loop_ip = data["AS"][as_id]["routers"][other_r]["interfaces"]["Loopback0"]["ipv6"].split("/")[0]
-                        config_lines.append(
-                            f" neighbor {loop_ip} remote-as {as_id}\n"
-                        )
-                        neighbors.add(loop_ip)
+                for other_r in data["AS"][as_id]["routers"]:
+                    if other_r != r_name:
+                        # On accède directement au routeur dans le bon AS
+                        remote_router = data["AS"][as_id]["routers"][other_r]
+        
+                        # On vérifie si l'interface Loopback0 existe pour ce routeur
+                        if "Loopback0" in remote_router["interfaces"]:
+                            loop_ip = remote_router["interfaces"]["Loopback0"]["ipv6"].split("/")[0]
+                            config_lines.append(
+                                f" neighbor {loop_ip} remote-as {as_id}\n"
+                            )
+                            neighbors.add(loop_ip)
 
                 # ---- eBGP (interfaces)
                 for int_info in r_info["interfaces"].values():
