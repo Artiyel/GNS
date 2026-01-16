@@ -3,7 +3,7 @@
         "101": {
             "igp": "RIP",
             "network": {
-                "prefix": "2001:101::",
+                "prefix": "2001:101:",
                 "subnet": "/64"
             },
             "routers": {
@@ -216,7 +216,7 @@
         "102": {
             "igp": "OSPF",
             "network": {
-                "prefix": "2001:102::",
+                "prefix": "2001:102:",
                 "subnet": "/64"
             },
             "routers": {
