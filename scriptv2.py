@@ -3,6 +3,7 @@ from pathlib import Path
 from ospf_routing import Ospf_Routing
 from rip_routing import rip_routing
 from drag_and_drop import drag_and_drop
+from bgp_routing_v2 import writeBGPconfig
 
 
 def load_intent(file_path):
@@ -81,9 +82,11 @@ def config_interfaces(data):
                     file.write("!\n")
 
                 # Footer Standard
-                file.write("!\nip forward-protocol nd\n!\nno ip http server\nno ip http secure-server\n!\ncontrol-plane\n!\ncontrol-plane\n!\nline con 0\n exec-timeout 0 0\n privilege level 15\n logging synchronous\nline vty 0 4\n login\n!\nend\n")
+                file.write("!\nip forward-protocol nd\n!\nno ip http server\nno ip http secure-server\n!\n!\n!\n!\ncontrol-plane\n!\nline con 0\n exec-timeout 0 0\n privilege level 15\n logging synchronous\nline vty 0 4\n login\n!\nend\n")
         rip_routing(as_id,data)
         Ospf_Routing(as_id,data)
+        writeBGPconfig(data)
+        
 # Exécution
 source = 'intent2.json'
 data = load_intent(source)

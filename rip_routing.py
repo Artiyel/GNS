@@ -13,7 +13,7 @@ def write_rip(router, AS_number):
     process_id = router[1:]
     area_id = AS_number[1:]
     path = "config/R"+process_id+"_i"+process_id+"_startup-config.cfg"
-    line = f" ipv6 rip p{area_id} enable\n"
+    line = f" ipv6 rip p{process_id} enable\n"
    
     with open(path, "r") as f:
         config = f.readlines()
@@ -36,8 +36,10 @@ def write_rip(router, AS_number):
                 n+=1
                 if not config[i+1].startswith("interface"):
                         newconfig.append("!\n")
-                        newconfig.append("ipv6 router rip p"+area_id+"\n")
+                        newconfig.append("ipv6 router rip p"+process_id+"\n")
                         newconfig.append(" redistribute connected\n")
+                        newconfig.append(" redistribute bgp " + AS_number + "\n")
+                        newconfig.append("!\n")
                         i+=1
             else : 
                 newconfig.append(config[i])
@@ -55,4 +57,5 @@ def write_rip(router, AS_number):
             for line in newconfig:
                 f.write(line)         
 
-rip_routing("101")
+if __name__ == "__main__":
+    rip_routing("101")

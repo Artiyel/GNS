@@ -1,3 +1,5 @@
+### !!!!!! TO DO : FAIRE LES NETWORKS DANS BGP !!!!!!!!!
+
 import json
 
 with open('intent2.json', 'r') as file:
@@ -30,10 +32,12 @@ def writeBGPconfig(data):
 
             if (
                 config[i] == "!\n"
-                and i + 2 < len(config)
                 and config[i+1] == "!\n"
+                and i + 2 < len(config)
                 and config[i+2] == "ip forward-protocol nd\n"
             ):
+                
+                
                 # ---- BGP
                 config_lines.extend([
                     f"router bgp {as_id}\n",
@@ -47,14 +51,13 @@ def writeBGPconfig(data):
                     if other_r != r_name:
                         # On accède directement au routeur dans le bon AS
                         remote_router = data["AS"][as_id]["routers"][other_r]
-                        
-    # BIZARRE ON RENTRE PAS DANS LA BOUCLE ????
+                    
                         # On vérifie si l'interface Loopback0 existe pour ce routeur
                         if "Loopback0" in remote_router["interfaces"]:
                             
                             loop_ip = remote_router["interfaces"]["Loopback0"]["ipv6"].split("/")[0]
                             config_lines.append(
-                                f" neighbor {loop_ip} remote-as {as_id}\n"
+                                f" neighbor {loop_ip} remote-as {as_id}\n neighbor {loop_ip} update-source Loopback0\n"
                             )
                             neighbors.add(loop_ip)
 
@@ -75,12 +78,13 @@ def writeBGPconfig(data):
                     if remote_ip:
                         config_lines.append(
                             f" neighbor {remote_ip} remote-as {neighbor_as}\n"
+                            
                         )
                         neighbors.add(remote_ip)
-
+                
                 # ---- address-family ipv6
                 config_lines.extend(["!\n",
-                    "address-family ipv6\n",
+                    " address-family ipv6\n",
                     "  redistribute connected\n"
                 ])
 
@@ -88,10 +92,13 @@ def writeBGPconfig(data):
                     config_lines.append(f"  neighbor {n} activate\n")
 
                 config_lines.append(" exit-address-family\n")
+                
 
             i += 1
+        
 
         with open(path, "w") as f:
             f.writelines(config_lines)
 
-writeBGPconfig(routing_data)
+if __name__ == "__main__":
+    writeBGPconfig(routing_data)

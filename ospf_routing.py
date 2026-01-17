@@ -54,9 +54,7 @@ def Write_Ospf(router,AS_number):
                     newconfig.append("!\n")
                     newconfig.append("router ospf "+process_id+"\n")
                     newconfig.append("!\n")
-                    newconfig.append("ipv6 router ospf "+process_id+"\n")
-                    newconfig.append(f" router-id {process_id}.{process_id}.{process_id}.{process_id}\n")
-                    newconfig.append("redistribute bgp "+area_id+"\n")
+
                     i+=1
                     n=0
             else : 
@@ -69,11 +67,21 @@ def Write_Ospf(router,AS_number):
                 i=0
                 waitinglist.pop(verif)
                 newconfig=[]
+        j = 0
+        NewNewConfig=[]
+        while j < len(newconfig) : 
+            NewNewConfig.append(newconfig[j])
+            if newconfig[j].startswith("no ip http secure-server"):
+                NewNewConfig.append("!\n")
+                NewNewConfig.append("ipv6 router ospf "+process_id+"\n")
+                NewNewConfig.append(f" router-id {process_id}.{process_id}.{process_id}.{process_id}\n")
+                NewNewConfig.append(" redistribute bgp " + AS_number + "\n")
+            j+=1
 
         #on ecrit la nouvelle config
         with open(path,"w") as f:
-            for line in newconfig:
+            for line in NewNewConfig:
                 f.write(line)
 
-
-Ospf_Routing("102")
+if __name__ == "__main__":
+    Ospf_Routing("102")
