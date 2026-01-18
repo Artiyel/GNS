@@ -47,7 +47,8 @@ def Write_Ospf(router,AS_number):
                     newconfig.append(config[i])
                     i+=1
                 #on ajoute la ligne de configuration
-                newconfig.append(line)
+                if config[i-1].startswith(f" ipv6 address 2001:{AS_number}") or config[i-1].startswith(f" ipv6 address 2001:DB8") : 
+                    newconfig.append(line)
                 n+=1
                 verif+=1
                 if not config[i+1].startswith("interface"):

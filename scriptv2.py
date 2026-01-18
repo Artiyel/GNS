@@ -18,11 +18,16 @@ def set_prefix(data,source):
     autonomous_systems = data.get('AS', {})
     for autonomous_system, as_data in autonomous_systems.items():
         as_data['network']['prefix'] = f"2001:{autonomous_system}:"
-        as_data['network']['subnet'] = '/64'
+        as_data['network']['subnet'] = '/32'
     dump_intent(source, data)
 
 def set_address(data,source):
     autonomous_systems = data.get('AS', {})
+    router_to_as = {}
+    deja_parc={}
+    for num_as, info_as in data["AS"].items():
+        for r in info_as["routers"]:
+            router_to_as[r[1:]] = num_as
     for as_id, as_data in autonomous_systems.items():
         prefix = as_data['network']['prefix']
         for router, router_data in as_data.get('routers', {}).items():
@@ -35,12 +40,28 @@ def set_address(data,source):
                     interface_data['mask'] = "/128"
                     continue
                 
+
                 # --- LOGIQUE INTERFACES PHYSIQUES ---
                 neighbor = interface_data.get('ngbr')
-                if neighbor and interface_data.get('ipv6') == '':
-                    n_id = neighbor[1:]
-                    interface_data['ipv6'] = f"{prefix}{r_id}{n_id}::{r_id}"
-                    interface_data['mask'] = "/64"
+
+                neighbor_AS =router_to_as[neighbor[1:]]
+                current_AS = router_to_as[r_id]
+                if neighbor_AS != current_AS:
+                    if deja_parc.get(current_AS) is None : 
+                        interface_data['ipv6'] = f"2001:1{current_AS[2::]}{neighbor_AS[2::]}:20::{r_id}"
+                        deja_parc[neighbor_AS] = interface_data['ipv6']
+                        
+                    else : 
+                        interface_data['ipv6'] = f"2001:1{neighbor_AS[2::]}{current_AS[2::]}:20::{r_id}"
+
+                        
+                
+                else :
+
+                    if neighbor and interface_data.get('ipv6') == '':
+                        n_id = neighbor[1:]
+                        interface_data['ipv6'] = f"{prefix}{r_id}{n_id}::{r_id}"
+                        interface_data['mask'] = "/64"
 
     dump_intent(source, data)
 

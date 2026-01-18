@@ -4,7 +4,7 @@
             "igp": "RIP",
             "network": {
                 "prefix": "2001:101:",
-                "subnet": "/64"
+                "subnet": "/32"
             },
             "routers": {
                 "R1": {
@@ -58,7 +58,7 @@
                             }
                         },
                         "Gigabitethernet2/0": {
-                            "ipv6": "2001:101:34::3",
+                            "ipv6": "2001:112:20::3",
                             "ngbr": "R4",
                             "network": {
                                 "prefix": "",
@@ -77,13 +77,13 @@
             "igp": "OSPF",
             "network": {
                 "prefix": "2001:102:",
-                "subnet": "/64"
+                "subnet": "/32"
             },
             "routers": {
                 "R4": {
                     "interfaces": {
                         "Gigabitethernet0/0": {
-                            "ipv6": "2001:102:43::4",
+                            "ipv6": "2001:112:20::4",
                             "ngbr": "R3",
                             "network": {
                                 "prefix": "",

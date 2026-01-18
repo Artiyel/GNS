@@ -45,21 +45,6 @@ def writeBGPconfig(data):
                     " bgp log-neighbor-changes\n",
                     " no bgp default ipv4-unicast\n"
                 ])
-                
-                # ---- iBGP (loopbacks)
-                for other_r in data["AS"][as_id]["routers"]:
-                    if other_r != r_name:
-                        # On accède directement au routeur dans le bon AS
-                        remote_router = data["AS"][as_id]["routers"][other_r]
-                    
-                        # On vérifie si l'interface Loopback0 existe pour ce routeur
-                        if "Loopback0" in remote_router["interfaces"]:
-                            
-                            loop_ip = remote_router["interfaces"]["Loopback0"]["ipv6"].split("/")[0]
-                            config_lines.append(
-                                f" neighbor {loop_ip} remote-as {as_id}\n neighbor {loop_ip} update-source Loopback0\n"
-                            )
-                            neighbors.add(loop_ip)
 
                 # ---- eBGP (interfaces)
                 for int_info in r_info["interfaces"].values():
@@ -81,12 +66,47 @@ def writeBGPconfig(data):
                             
                         )
                         neighbors.add(remote_ip)
+
+                # ---- iBGP (loopbacks)
+                for other_r in data["AS"][as_id]["routers"]:
+                    if other_r != r_name:
+                        # On accède directement au routeur dans le bon AS
+                        remote_router = data["AS"][as_id]["routers"][other_r]
+                    
+                        # On vérifie si l'interface Loopback0 existe pour ce routeur
+                        if "Loopback0" in remote_router["interfaces"]:
+                            
+                            loop_ip = remote_router["interfaces"]["Loopback0"]["ipv6"].split("/")[0]
+                            config_lines.append(
+                                f" neighbor {loop_ip} remote-as {as_id}\n neighbor {loop_ip} update-source Loopback0\n"
+                            )
+                            neighbors.add(loop_ip)
+
+                
                 
                 # ---- address-family ipv6
                 config_lines.extend(["!\n",
                     " address-family ipv6\n",
-                    "  redistribute connected\n"
                 ])
+              
+
+                # Utilisation d'un set pour éviter d'annoncer deux fois le même réseau
+                # (par exemple si deux interfaces sont sur le même segment)
+                networks_a_annoncer = set()
+
+                for int_name, int_info in r_info["interfaces"].items():
+                    full_ipv6 = int_info.get("ipv6")
+                    if full_ipv6:
+                        # On transforme l'IP en préfixe réseau /64
+                        # ex: 2001:101:31::3/64 -> 2001:101:31::/64
+                        prefix_part = ":".join(full_ipv6.split(":")[:3]) + "::/64"
+                        networks_a_annoncer.add(prefix_part)
+
+                # On écrit les commandes network dans la config
+                for net in sorted(networks_a_annoncer):
+                    config_lines.append(f"  network {net}\n")
+
+
 
                 for n in neighbors:
                     config_lines.append(f"  neighbor {n} activate\n")
