@@ -104,6 +104,7 @@ def config_interfaces(data):
 
                 # Footer Standard
                 file.write("!\nip forward-protocol nd\n!\nno ip http server\nno ip http secure-server\n!\n!\n!\n!\ncontrol-plane\n!\nline con 0\n exec-timeout 0 0\n privilege level 15\n logging synchronous\nline vty 0 4\n login\n!\nend\n")
+            
         rip_routing(as_id,data)
         Ospf_Routing(as_id,data)
         writeBGPconfig(data)
