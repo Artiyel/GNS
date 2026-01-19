@@ -17,6 +17,16 @@
                                 "subnet": ""
                             }
                         },
+
+                        "Gigabitethernet1/0": {
+                            "ipv6": "",
+                            "ngbr": "R7",
+                            "network": {
+                                "prefix": "",
+                                "subnet": ""
+                            }
+                        },
+
                         "Loopback0": {
                             "ipv6": "",
                             "mask": ""
@@ -157,7 +167,15 @@
                     "interfaces": {
                         "Gigabitethernet0/0": {
                             "ipv6": "",
-                            "ngbr": "R3",
+                            "ngbr": "R1",
+                            "network": {
+                                "prefix": "",
+                                "subnet": ""
+                            }
+                        },
+                        "Gigabitethernet1/0": {
+                            "ipv6": "",
+                            "ngbr": "R8",
                             "network": {
                                 "prefix": "",
                                 "subnet": ""
