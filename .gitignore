@@ -4,7 +4,4 @@
 *.txt
 
 #on ignore le dossier GNS3
-GNS3/
-gabin/
-Test/
-__pycache/
+*/
