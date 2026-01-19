@@ -4,7 +4,7 @@
             "igp": "RIP",
             "network": {
                 "prefix": "",
-                "subnet": "/32"
+                "subnet": ""
             },
             "routers": {
                 "R1": {
@@ -19,7 +19,7 @@
                         },
                         "Loopback0": {
                             "ipv6": "",
-                            "mask": "/128"
+                            "mask": ""
                         }
                     }
                 },
@@ -35,7 +35,7 @@
                         },
                         "Loopback0": {
                             "ipv6": "",
-                            "mask": "/128"
+                            "mask": ""
                         }
                     }
                 },
@@ -67,7 +67,7 @@
                         },
                         "Loopback0": {
                             "ipv6": "",
-                            "mask": "/128"
+                            "mask": ""
                         }
                     }
                 }
@@ -108,7 +108,7 @@
                         },
                         "Loopback0": {
                             "ipv6": "",
-                            "mask": "/128"
+                            "mask": ""
                         }
                     }
                 },
@@ -124,7 +124,7 @@
                         },
                         "Loopback0": {
                             "ipv6": "",
-                            "mask": "/128"
+                            "mask": ""
                         }
                     }
                 },
@@ -140,7 +140,7 @@
                         },
                         "Loopback0": {
                             "ipv6": "",
-                            "mask": "/128"
+                            "mask": ""
                         }
                     }
                 }
