@@ -114,7 +114,7 @@ source = 'test.json'
 data = load_intent(source)
 set_prefix(data,source)
 set_address(data,source)
-dynamips = Path("gabin/project-files/dynamips")
+dynamips = Path("Venezuela/project-files/dynamips")
 create_config_files(data)
 config_interfaces(data)
 drag_and_drop(dynamips)
