@@ -2,7 +2,7 @@
 
 import json
 
-with open('intent2.json', 'r') as file:
+with open('test.json', 'r') as file:
     routing_data = json.load(file)
 
 def writeBGPconfig(data):

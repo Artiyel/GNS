@@ -110,7 +110,7 @@ def config_interfaces(data):
         writeBGPconfig(data)
         
 # Exécution
-source = 'intent2.json'
+source = 'test.json'
 data = load_intent(source)
 set_prefix(data,source)
 set_address(data,source)
