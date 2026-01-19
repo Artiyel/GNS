@@ -1,0 +1,192 @@
+{
+    "AS": {
+        "101": {
+            "igp": "RIP",
+            "network": {
+                "prefix": "",
+                "subnet": "/32"
+            },
+            "routers": {
+                "R1": {
+                    "interfaces": {
+                        "Gigabitethernet0/0": {
+                            "ipv6": "",
+                            "ngbr": "R3",
+                            "network": {
+                                "prefix": "",
+                                "subnet": ""
+                            }
+                        },
+                        "Loopback0": {
+                            "ipv6": "",
+                            "mask": "/128"
+                        }
+                    }
+                },
+                "R2": {
+                    "interfaces": {
+                        "Gigabitethernet0/0": {
+                            "ipv6": "",
+                            "ngbr": "R3",
+                            "network": {
+                                "prefix": "",
+                                "subnet": ""
+                            }
+                        },
+                        "Loopback0": {
+                            "ipv6": "",
+                            "mask": "/128"
+                        }
+                    }
+                },
+                "R3": {
+                    "interfaces": {
+                        "Gigabitethernet0/0": {
+                            "ipv6": "",
+                            "ngbr": "R1",
+                            "network": {
+                                "prefix": "",
+                                "subnet": ""
+                            }
+                        },
+                        "Gigabitethernet1/0": {
+                            "ipv6": "",
+                            "ngbr": "R2",
+                            "network": {
+                                "prefix": "",
+                                "subnet": ""
+                            }
+                        },
+                        "Gigabitethernet2/0": {
+                            "ipv6": "",
+                            "ngbr": "R4",
+                            "network": {
+                                "prefix": "",
+                                "subnet": ""
+                            }
+                        },
+                        "Loopback0": {
+                            "ipv6": "",
+                            "mask": "/128"
+                        }
+                    }
+                }
+            }
+        },
+        "102": {
+            "igp": "OSPF",
+            "network": {
+                "prefix": "",
+                "subnet": "/32"
+            },
+            "routers": {
+                "R4": {
+                    "interfaces": {
+                        "Gigabitethernet0/0": {
+                            "ipv6": "",
+                            "ngbr": "R3",
+                            "network": {
+                                "prefix": "",
+                                "subnet": ""
+                            }
+                        },
+                        "Gigabitethernet1/0": {
+                            "ipv6": "",
+                            "ngbr": "R5",
+                            "network": {
+                                "prefix": "",
+                                "subnet": ""
+                            }
+                        },
+                        "Gigabitethernet2/0": {
+                            "ipv6": "",
+                            "ngbr": "R6",
+                            "network": {
+                                "prefix": "",
+                                "subnet": ""
+                            }
+                        },
+                        "Loopback0": {
+                            "ipv6": "",
+                            "mask": "/128"
+                        }
+                    }
+                },
+                "R5": {
+                    "interfaces": {
+                        "Gigabitethernet0/0": {
+                            "ipv6": "",
+                            "ngbr": "R4",
+                            "network": {
+                                "prefix": "",
+                                "subnet": ""
+                            }
+                        },
+                        "Loopback0": {
+                            "ipv6": "",
+                            "mask": "/128"
+                        }
+                    }
+                },
+                "R6": {
+                    "interfaces": {
+                        "Gigabitethernet0/0": {
+                            "ipv6": "",
+                            "ngbr": "R4",
+                            "network": {
+                                "prefix": "",
+                                "subnet": ""
+                            }
+                        },
+                        "Loopback0": {
+                            "ipv6": "",
+                            "mask": "/128"
+                        }
+                    }
+                }
+            }
+        },
+        "103": {
+            "igp": "RIP",
+            "network": {
+                "prefix": "",
+                "subnet": "/32"
+            },
+            "routers": {
+                "R7": {
+                    "interfaces": {
+                        "Gigabitethernet0/0": {
+                            "ipv6": "",
+                            "ngbr": "R3",
+                            "network": {
+                                "prefix": "",
+                                "subnet": ""
+                            }
+                        },
+                        "Loopback0": {
+                            "ipv6": "",
+                            "mask": "/128"
+                        }
+                    }
+                },
+                "R8": {
+                    "interfaces": {
+                        "Gigabitethernet0/0": {
+                            "ipv6": "",
+                            "ngbr": "R7",
+                            "network": {
+                                "prefix": "",
+                                "subnet": ""
+                            }
+                        },
+                        "Loopback0": {
+                            "ipv6": "",
+                            "mask": "/128"
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
+}
