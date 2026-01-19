@@ -1,4 +1,4 @@
-### !!!!!! TO DO : FAIRE LES NETWORKS DANS BGP !!!!!!!!!
+ 
 
 import json
 
