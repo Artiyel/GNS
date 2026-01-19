@@ -2,6 +2,7 @@
     "AS": {
         "101": {
             "igp": "RIP",
+            "ngbr_AS":{"102": "customer", "103": "provider"},
             "network": {
                 "prefix": "",
                 "subnet": ""
@@ -85,6 +86,7 @@
         },
         "102": {
             "igp": "OSPF",
+            "ngbr_AS":{"101": "provider"},
             "network": {
                 "prefix": "",
                 "subnet": "/32"
@@ -158,6 +160,7 @@
         },
         "103": {
             "igp": "RIP",
+            "ngbr_AS":{"101": "customer"},
             "network": {
                 "prefix": "",
                 "subnet": ""
