@@ -3,8 +3,8 @@
         "101": {
             "igp": "RIP",
             "ngbr_AS": {
-                "102": "provider",
-                "103": "customer"
+                "102": "customer",
+                "103": "provider"
             },
             "network": {
                 "prefix": "2001:101:",
@@ -92,7 +92,7 @@
         "102": {
             "igp": "OSPF",
             "ngbr_AS": {
-                "101": "customer"
+                "101": "provider"
             },
             "network": {
                 "prefix": "2001:102:",
@@ -172,7 +172,7 @@
         "103": {
             "igp": "RIP",
             "ngbr_AS": {
-                "101": "provider"
+                "101": "customer"
             },
             "network": {
                 "prefix": "2001:103:",

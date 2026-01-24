@@ -3,7 +3,7 @@ from pathlib import Path
 from ospf_routing import Ospf_Routing
 from rip_routing import rip_routing
 from drag_and_drop import drag_and_drop
-from bgp_routing_v3 import writeBGPconfig
+from bgp_routing_communities import writeBGPconfig
 
 
 def load_intent(file_path):
