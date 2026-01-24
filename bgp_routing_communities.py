@@ -111,29 +111,41 @@ def writeBGPconfig(data):
                 # On écrit les commandes network dans la config
                 for net in sorted(networks):
                     config_lines.append(f"  network {net}\n")
+                    config_lines.append(f"  network {net} route-map TAG-SELF\n") # permet de taguer le préfixe dès qu'il entre dans le processus BGP
 
 
                 for n in neighbors:
                     config_lines.append(f"  neighbor {n['ip']} activate\n")
-                    config_lines.append(f"  neighbor {n['ip']} send-community\n")
+                    config_lines.append(f"  neighbor {n['ip']} send-community\n") # Pour que les tags soient propagés en iBGP
+                    "!\n",
+
+                    "route-map SET-LOCAL-PREF permit 10\n",
+                    " match community CUSTOMER\n",
+                    " set local-preference 200\n",
+
+                    "route-map SET-LOCAL-PREF permit 20\n",
+                    " match community PEER\n",
+                    " set local-preference 150\n",
+
+                    "route-map SET-LOCAL-PREF permit 30\n",
+                    " set local-preference 100\n"
 
                     if n.get("ebgp"):
-                        # --- LOGIQUE eBGP (Bordure de l'AS) ---
+                        # eBGP
                         
                         if n.get("type") == "customer":
-                            # Si c'est MON client : je marque ses routes avec LocPrf 200
+                            # Si c'est mon client : je lui envoie tout 
                             config_lines.append(f"  neighbor {n['ip']} route-map FROM-CUSTOMER-IN in\n")
-                            # Je lui envoie tout (pas de route-map out restrictive)
+                            
                             
                         elif n.get("type") == "provider":
-                            # Si c'est MON provider :
-                            # 1. Je ne lui envoie QUE mes routes clients (sécurité)
+                            # Si c'est mon provider : je lui envoie que mes routes clients
                             config_lines.append(f"  neighbor {n['ip']} route-map TO-PROVIDER-OUT out\n")
-                            # 2. Je baisse la priorité de ses routes à 100
+                            # Je baisse la priorité de ses routes à 100
                             config_lines.append(f"  neighbor {n['ip']} route-map FROM-PROVIDER-IN in\n")
 
                     else:
-                        # --- LOGIQUE iBGP (Interne) ---
+                        # iBGP 
                         # Je lis les tags posés par mes routeurs de bordure
                         config_lines.append(f"  neighbor {n['ip']} route-map SET-LOCAL-PREF in\n")
 
@@ -152,24 +164,35 @@ def writeBGPconfig(data):
                 config_lines.extend([
                     "!\n",
                     "route-map FROM-CUSTOMER-IN permit 10\n",
-                    f" set community {as_id}:100\n",
-                    " set local-preference 200\n",
+                    f" set community {as_id}:100\n", # On marque la route comme client
+                    " set local-preference 200\n", # On lui donne une priorité forte pour qu'elle soit préférée aux autres
                     "!\n",
+
                     "route-map FROM-PROVIDER-IN permit 10\n",
-                    f" set community {as_id}:300\n",
-                    " set local-preference 100\n",
+                    f" set community {as_id}:300\n", # On marque la route comme provider
+                    " set local-preference 100\n", # On lui donne une priorité faible
                     "!\n",
+
                     "route-map TO-PROVIDER-OUT permit 10\n",
-                    " match community CUSTOMER\n", # On ne laisse passer que les clients
-                    "!\n",
-                    "route-map TO-PROVIDER-OUT permit 20\n",
-                    "!\n",
+                    " match community CUSTOMER\n", # Si la route appartient à un de mes clients, alors je l'annonce à mon provider
+                    "!\n", # Les autres routes ne lui seront pas annoncées
+
+                    "route-map TAG-SELF permit 10\n",
+                    f" set community {as_id}:100\n", # On utilise le tag customer
+                    " set local-preference 200\n",   # Priorité maximale car c'est chez nous
+                    "!\n"
+                
+
+                    # Pour les routeurs internes qui reçoivent des routes via iBGP 
+                    # Gestion de la local pref interne basée sur les tags
                     "route-map SET-LOCAL-PREF permit 10\n",
                     " match community CUSTOMER\n",
                     " set local-preference 200\n",
+
                     "route-map SET-LOCAL-PREF permit 20\n",
                     " match community PEER\n",
                     " set local-preference 150\n",
+
                     "route-map SET-LOCAL-PREF permit 30\n",
                     " set local-preference 100\n"
                 ])
