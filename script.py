@@ -48,11 +48,12 @@ def set_address(data,source):
                 current_AS = router_to_as[r_id]
                 if neighbor_AS != current_AS:
                     if deja_parc.get(current_AS) is None : 
-                        interface_data['ipv6'] = f"2001:1{current_AS[2::]}{neighbor_AS[2::]}:20::{r_id}"
+                        interface_data['ipv6'] = f"2001:1{current_AS[2::]}{neighbor_AS[2::]}:{r_id}{neighbor[1:]}::{r_id}"
+                        interface_data['mask'] = "/64"
                         deja_parc[neighbor_AS] = interface_data['ipv6']
                         
                     else : 
-                        interface_data['ipv6'] = f"2001:1{neighbor_AS[2::]}{current_AS[2::]}:20::{r_id}"
+                        interface_data['ipv6'] = f"2001:1{neighbor_AS[2::]}{current_AS[2::]}:{neighbor[1:]}{r_id}::{r_id}"
 
                         
                 
@@ -91,7 +92,7 @@ def config_interfaces(data):
                     file.write(" no ip address\n")
                     
                     # On utilise le masque spécifique (/128 ou /64) défini dans set_address
-                    mask = interface_data.get('mask', '/64')
+                    mask = interface_data.get('mask') or "/64"
                     ipv6 = interface_data.get('ipv6', '')
                     
                     if ipv6:
