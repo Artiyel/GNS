@@ -6,7 +6,7 @@ from drag_and_drop import drag_and_drop
 from bgp_routing_communities import writeBGPconfig
 
 
-def load_intent(file_path):
+def load_intent(file_path): # on charge le fichier intent
     with open(file_path, 'r', encoding='utf-8') as file:
         return json.load(file)
 
@@ -14,14 +14,14 @@ def dump_intent(file_path, data):
     with open(file_path, 'w', encoding='utf-8') as file:
         json.dump(data, file, indent=4, ensure_ascii=False)
 
-def set_prefix(data,source):
+def set_prefix(data,source): # On définit le préfixe pour les réseaux de chaque AS
     autonomous_systems = data.get('AS', {})
     for autonomous_system, as_data in autonomous_systems.items():
         as_data['network']['prefix'] = f"2001:{autonomous_system}:"
         as_data['network']['subnet'] = '/32'
     dump_intent(source, data)
 
-def set_address(data,source):
+def set_address(data,source): # On définit les adresses de chaque interface
     autonomous_systems = data.get('AS', {})
     router_to_as = {}
     deja_parc={}
@@ -34,19 +34,19 @@ def set_address(data,source):
             r_id = router[1:] # Extrait le chiffre de "R1" -> "1"
             for interface, interface_data in router_data.get('interfaces', {}).items():
                 
-                # --- LOGIQUE LOOPBACK ---
+                #  LOOPBACK 
                 if interface == "Loopback0":
                     interface_data['ipv6'] = f"2001:DB8:{r_id}::1"
                     interface_data['mask'] = "/128"
                     continue
                 
 
-                # --- LOGIQUE INTERFACES PHYSIQUES ---
+                #  INTERFACES PHYSIQUES 
                 neighbor = interface_data.get('ngbr')
 
                 neighbor_AS =router_to_as[neighbor[1:]]
                 current_AS = router_to_as[r_id]
-                if neighbor_AS != current_AS:
+                if neighbor_AS != current_AS: # si le lien est inter-AS
                     if deja_parc.get(current_AS) is None : 
                         interface_data['ipv6'] = f"2001:1{current_AS[2::]}{neighbor_AS[2::]}:{r_id}{neighbor[1:]}::{r_id}"
                         interface_data['mask'] = "/64"
@@ -71,12 +71,12 @@ def create_config_files(data):
     Path("config").mkdir(exist_ok=True)
     autonomous_systems = data.get('AS', {})
     for as_id, as_data in autonomous_systems.items():
-        for router in as_data.get('routers', {}).keys():
+        for router in as_data.get('routers', {}).keys(): # On crée les fichiers de config de chaque routeur
             r_id = router[1:]
             open(f"config/{router}_i{r_id}_private-config.cfg", "w").close()
             open(f"config/{router}_i{r_id}_startup-config.cfg", "w").close()
 
-def config_interfaces(data):
+def config_interfaces(data): # on écrit dans les fichiers de config des routeurs
     autonomous_systems = data.get('AS', {})
     for as_id, as_data in autonomous_systems.items():
         for router, router_data in as_data.get('routers', {}).items():

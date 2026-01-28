@@ -7,13 +7,13 @@ with open('intent.json', 'r') as file:
 
 def writeBGPconfig(data):
 
-    # 1. Créer un dict pour trouver l'AS d'un routeur rapidement
+    # On crée un dict pour trouver l'AS d'un routeur rapidement
     router_to_as = {}
     for as_id, as_info in data["AS"].items():
         for r in as_info["routers"]:
             router_to_as[r] = as_id
 
-     # 2. Parcourir tous les routeurs 
+    # On parcourt tous les routeurs 
     for r_name, as_id in router_to_as.items():
         r_info = data["AS"][as_id]["routers"][r_name]
         path = f"config/R{r_name[1:]}_i{r_name[1:]}_startup-config.cfg"
@@ -25,7 +25,7 @@ def writeBGPconfig(data):
         neighbors = []
         i = 0
 
-        while i < len(config):
+        while i < len(config): # On parcourt toutes les lignes de config
             
             # on réecrit ce qu'il y avait avant dans le fichier config
             config_lines.append(config[i])
@@ -38,7 +38,7 @@ def writeBGPconfig(data):
             ):
                 
                 
-                # ---- BGP
+                # BGP
                 config_lines.extend([
                     f"router bgp {as_id}\n",
                     f" bgp router-id {r_name[1:]}.{r_name[1:]}.{r_name[1:]}.{r_name[1:]}\n",
@@ -48,21 +48,21 @@ def writeBGPconfig(data):
 
                 
                 # On détecte les routeurs de bordure
-                # ---- eBGP (interfaces)
+                # --> eBGP sur les interfaces de bordure
                 border_routers = []
                 for int_info in r_info["interfaces"].values():
                     neighbor = int_info.get("ngbr")
                     neighbor_as = router_to_as.get(neighbor)
-                    if neighbor_as and neighbor_as != as_id:
+                    if neighbor_as and neighbor_as != as_id: # Si les routeurs ne sont pas dans le même AS
                         border_routers.append(neighbor_as)
 
-                        as_type = data["AS"][as_id]["ngbr_AS"][neighbor_as]
+                        as_type = data["AS"][as_id]["ngbr_AS"][neighbor_as] # customer ou peer ou provider
                         remote_ip = None
-                        for n_int in data["AS"][neighbor_as]["routers"][neighbor]["interfaces"].values():
-                            if n_int.get("ngbr") == r_name:
-                                remote_ip = n_int["ipv6"].split("/")[0]
+                        for n_int in data["AS"][neighbor_as]["routers"][neighbor]["interfaces"].values(): # Pour toutes les interfaces du voisin
+                            if n_int.get("ngbr") == r_name: # Si on est son voisin sur cette interface
+                                remote_ip = n_int["ipv6"].split("/")[0] # on note son ip
 
-                        if remote_ip:
+                        if remote_ip: # on crée un dico des infos sur ce voisin hors de notre AS
                             neighbors.append({
                                 "ip": remote_ip,
                                 "type": as_type,
@@ -70,30 +70,30 @@ def writeBGPconfig(data):
                                 "ebgp": True
                             })
 
-                        config_lines.extend([
+                        config_lines.extend([ # On ajoute à la configuration : 
                             f" neighbor {remote_ip} remote-as {neighbor_as}\n",
-                            f" neighbor {remote_ip} description {as_type.upper()}-{neighbor}-AS{neighbor_as}\n",
+                            f" neighbor {remote_ip} description {as_type.upper()}-{neighbor}-AS{neighbor_as}\n", # pour les communities
                         ])
                 
 
-                # ---- iBGP (loopbacks)
-                for other_r, other_info in data["AS"][as_id]["routers"].items():
-                    if other_r != r_name:
-                        if "Loopback0" in other_info["interfaces"]:
-                            loop_ip = other_info["interfaces"]["Loopback0"]["ipv6"].split("/")[0]
-                            neighbors.append({
+                # iBGP (loopbacks)
+                for other_r, other_info in data["AS"][as_id]["routers"].items(): # pour tous les routeurs de notre AS
+                    if other_r != r_name: # si le routeur n'est pas le notre
+                        if "Loopback0" in other_info["interfaces"]: 
+                            loop_ip = other_info["interfaces"]["Loopback0"]["ipv6"].split("/")[0] # on garde son adresse de loopback
+                            neighbors.append({ # on garde ses infos 
                                 "ip": loop_ip,
                                 "ebgp": False
                             })
                             
-                            config_lines.extend([
+                            config_lines.extend([ # on le définit comme voisin pour le full-mesh
                                 f" neighbor {loop_ip} remote-as {as_id}\n",
                                 f" neighbor {loop_ip} update-source Loopback0\n",
                             ])
 
 
                 
-                # ---- address-family ipv6
+                # address-family ipv6
                 config_lines.extend(["!\n",
                     " address-family ipv6\n",
                 ])
@@ -103,35 +103,22 @@ def writeBGPconfig(data):
                 # (par exemple si deux interfaces sont sur le même segment)
                 networks = set()
 
-                for int_info in r_info["interfaces"].values():
+                for int_info in r_info["interfaces"].values(): # pour chaque interface du routeur 
                     if "ipv6" in int_info:
-                        prefix = ":".join(int_info["ipv6"].split(":")[:3]) + "::/64"
-                        networks.add(prefix)
+                        prefix = ":".join(int_info["ipv6"].split(":")[:3]) + "::/64" # on prend son préfixe
+                        networks.add(prefix) # on l'ajoute aux réseaux connus
 
                 # On écrit les commandes network dans la config
                 for net in sorted(networks):
-                    config_lines.append(f"  network {net}\n")
-                    config_lines.append(f"  network {net} route-map TAG-SELF\n") # permet de taguer le préfixe dès qu'il entre dans le processus BGP
+                    config_lines.append(f"  network {net}\n") # on annonce les networks
+                    config_lines.append(f"  network {net} route-map TAG-SELF\n") # permet de taguer le préfixe dès qu'il entre dans le processus BGP (taggué au même niveau qu'un client plus tard)
 
 
                 for n in neighbors:
-                    config_lines.append(f"  neighbor {n['ip']} activate\n")
+                    config_lines.append(f"  neighbor {n['ip']} activate\n") # pour chaque neighbor, on l'active avec son ip
                     config_lines.append(f"  neighbor {n['ip']} send-community\n") # Pour que les tags soient propagés en iBGP
-                    "!\n",
 
-                    "route-map SET-LOCAL-PREF permit 10\n",
-                    " match community CUSTOMER\n",
-                    " set local-preference 200\n",
-
-                    "route-map SET-LOCAL-PREF permit 20\n",
-                    " match community PEER\n",
-                    " set local-preference 150\n",
-
-                    "route-map SET-LOCAL-PREF permit 30\n",
-                    " set local-preference 100\n"
-
-                    if n.get("ebgp"):
-                        # eBGP
+                    if n.get("ebgp"): # si on communique avec le voisin en ebgp
                         
                         if n.get("type") == "customer":
                             # Si c'est mon client : je lui envoie tout 
@@ -158,9 +145,8 @@ def writeBGPconfig(data):
                     f"ip community-list standard PROVIDER permit {as_id}:300\n!\n"
                 ])
 
-                # ---------- Route-maps ----------
+                # Route-maps
 
-                # ---------- Génération des Route-maps ----------
                 config_lines.extend([
                     "!\n",
                     "route-map FROM-CUSTOMER-IN permit 10\n",

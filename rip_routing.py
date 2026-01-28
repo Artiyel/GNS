@@ -2,8 +2,8 @@ import json
 with open('intent.json', 'r') as file:
     routing_data = json.load(file)
 
-def rip_routing(AS_number, routing_data=routing_data):
-    if routing_data["AS"][AS_number]["igp"] == "RIP":
+def rip_routing(AS_number, routing_data=routing_data): # on applique write_rip sur les routeurs contenus 
+    if routing_data["AS"][AS_number]["igp"] == "RIP":  # dans un AS ayant pour IGP RIP
         for router in routing_data["AS"][AS_number]["routers"]:
             write_rip(router,AS_number)
             
