@@ -103,12 +103,12 @@ def config_interfaces(data): # on écrit dans les fichiers de config des routeur
                         file.write(f" ipv6 address {ipv6}{mask}\n")
                     file.write("!\n")
 
-                # Footer Standard
+                # on respecte la syntaxe des fichiers de config
                 file.write("!\nip forward-protocol nd\n!\nno ip http server\nno ip http secure-server\n!\n!\n!\n!\ncontrol-plane\n!\nline con 0\n exec-timeout 0 0\n privilege level 15\n logging synchronous\nline vty 0 4\n login\n!\nend\n")
             
-        rip_routing(as_id,data)
-        Ospf_Routing(as_id,data)
-        writeBGPconfig(data)
+        rip_routing(as_id,data) # on ajoute la config RIP si besoin
+        Ospf_Routing(as_id,data) # on ajoute la config OSPF si besoin
+        writeBGPconfig(data) # on ajoute la config BGP
         
 # Exécution
 source = 'intent.json'
